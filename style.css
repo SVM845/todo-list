@@ -56,3 +56,45 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Project Styles 👇 */
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    width: 1000px;
+    height: 600px;
+    background-color: rgb(197, 193, 193);
+}
+.header {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header h1 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+#newTask {
+    display: flex;
+    width: 100%;
+}
+#newTask input {
+    width: 100%;
+    height: 50px;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+#newTask button {
+    width: 10%;
+    background-color: aqua;
+}
