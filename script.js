@@ -11,15 +11,15 @@ input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") { addTask() }
 })
 function addTask() {
-    p = document.createElement('p');
+    const p = document.createElement('p');
     p.textContent = input.value;
     p.classList.add('tasks');
-    deleteButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
     deleteButton.classList.add('tasks');
     deleteButton.classList.add('deleteButton')
     deleteButton.textContent = "X";
     deleteButton.addEventListener("click", (e) => {
-        tasksContainer.remove('p');
+        tasksContainer.removeChild(e.target.parentElement)
     });
     p.appendChild(deleteButton);
     tasksContainer.appendChild(p);
