@@ -1,6 +1,7 @@
 const addTaskButton = document.querySelector('#newTask button');
 const input = document.querySelector('#newTask input');
 const tasksContainer = document.querySelector('.tasksContainer');
+const themeButton = document.querySelector('#themeButton');
 
 addTaskButton.addEventListener("click", addTask);
 
@@ -47,10 +48,24 @@ function addTask() {
         task.remove();
     });
 
+    // Edit button
+    const editButton = document.createElement('button');
+    editButton.classList.add('editButton');
+    editButton.textContent = "✎";
+
+    editButton.addEventListener("click", () => {
+        const newTask = prompt("Edit task:", p.textContent);
+
+        if (newTask !== null && newTask.trim() !== "") {
+            p.textContent = newTask.trim();
+        }
+    });
+
     // Build the task
     taskButtons.appendChild(doneButton);
+    taskButtons.appendChild(editButton);
     taskButtons.appendChild(deleteButton);
-
+    
     task.appendChild(p);
     task.appendChild(taskButtons);
 
@@ -60,3 +75,14 @@ function addTask() {
     input.value = "";
     input.focus();
 }
+
+//Glass Theme
+themeButton.addEventListener("click", () => {
+    document.body.classList.toggle("glassTheme");
+
+    if (document.body.classList.contains("glassTheme")) {
+        themeButton.textContent = "◈ CYBER MODE";
+    } else {
+        themeButton.textContent = "◈ GLASS MODE";
+    }
+});
