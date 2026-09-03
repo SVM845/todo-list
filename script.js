@@ -96,6 +96,8 @@ function renderTasks() {
             task.completed = !task.completed;
             saveTasks();
             renderTasks();
+            markSound.currentTime = 0;
+            markSound.play();
         });
 
         // EDIT BUTTON
@@ -129,8 +131,6 @@ function renderTasks() {
 
         // COMPLETED STYLE
         if (task.completed) {
-            markSound.currentTime = 0;
-            markSound.play();
             p.classList.add('completed');
             taskElement.classList.add('completedTask');
         }
