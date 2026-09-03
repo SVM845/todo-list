@@ -493,6 +493,23 @@ body {
     padding: 0 10px;
   }
 }
+.creditFooter {
+  width: 100%;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: #070b0c;
+  color: var(--muted);
+  text-align: center;
+  font-family: "Courier New", monospace;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.creditFooter::before {
+  content: "// ";
+  color: var(--cyan);
+}
 
 /* GLASS FUTURISTIC THEME */
 
@@ -754,4 +771,23 @@ body.glassTheme .editButton:hover {
   background: rgba(255, 216, 107, 0.15);
   border-color: rgba(255, 216, 107, 0.4);
   box-shadow: 0 0 20px rgba(255, 216, 107, 0.15);
+}
+
+.taskCounterContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+body.glassTheme .creditFooter {
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.45);
+  font-family: Inter, Arial, sans-serif;
+  border-radius: 0 0 24px 24px;
+}
+
+body.glassTheme .creditFooter::before {
+  content: "";
 }

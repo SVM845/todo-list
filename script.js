@@ -2,11 +2,21 @@ const addTaskButton = document.querySelector('#newTask button');
 const input = document.querySelector('#newTask input');
 const tasksContainer = document.querySelector('.tasksContainer');
 const themeButton = document.querySelector('#themeButton');
+const taskCounter = document.querySelector('#taskCounter');
 
 
 // TASK DATA
 
 let tasks = [];
+
+
+//  SOUNDS
+const markSound = new Audio("./sounds/done.mp3");
+const deleteSound = new Audio("./sounds/delete.wav");
+const switchSound = new Audio("./sounds/switch.mp3");
+const addSound = new Audio("./sounds/add.mp3");
+
+
 
 
 // LOCAL STORAGE
@@ -24,10 +34,16 @@ function loadTasks() {
 }
 
 
+// TASK COUNTER
+
+function updateTaskCounter() {
+    taskCounter.textContent = `TASKS: ${tasks.length}`;
+}
+
+
 // ADD TASK
 
 addTaskButton.addEventListener("click", addTask);
-
 input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         addTask();
@@ -53,6 +69,8 @@ function addTask() {
 
     input.value = "";
     input.focus();
+    addSound.currentTime = 0;
+    addSound.play();
 }
 
 
@@ -60,29 +78,41 @@ function addTask() {
 
 function renderTasks() {
 
-    // Clear current tasks
+    // Clear existing tasks
     tasksContainer.innerHTML = "";
 
-    // Create every task from the tasks array
+
     tasks.forEach(task => {
 
-        // Main task container
+
+        // MAIN TASK
+
+
         const taskElement = document.createElement('div');
         taskElement.classList.add('task');
 
-        // Task text
+
+
+        // TASK TEXT
+
+
         const p = document.createElement('p');
+
         p.textContent = task.text;
         p.classList.add('taskText');
 
-        // Buttons container
+
+
+        // BUTTON CONTAINER
+
+
         const taskButtons = document.createElement('div');
         taskButtons.classList.add('taskButtons');
 
 
-    
+
         // DONE BUTTON
-    
+
 
         const doneButton = document.createElement('button');
 
@@ -98,9 +128,9 @@ function renderTasks() {
         });
 
 
-    
+
         // EDIT BUTTON
-    
+
 
         const editButton = document.createElement('button');
 
@@ -121,9 +151,9 @@ function renderTasks() {
         });
 
 
-    
+
         // DELETE BUTTON
-    
+
 
         const deleteButton = document.createElement('button');
 
@@ -132,6 +162,9 @@ function renderTasks() {
 
         deleteButton.addEventListener("click", () => {
 
+            deleteSound.currentTime = 0;
+            deleteSound.play();
+
             tasks = tasks.filter(t => t.id !== task.id);
 
             saveTasks();
@@ -139,19 +172,22 @@ function renderTasks() {
         });
 
 
-    
-        // COMPLETED STYLING
-    
+
+        // COMPLETED STYLE
+
 
         if (task.completed) {
+
+            markSound.currentTime = 0;
+            markSound.play();
             p.classList.add('completed');
             taskElement.classList.add('completedTask');
         }
 
 
-    
+
         // BUILD TASK
-    
+
 
         taskButtons.appendChild(doneButton);
         taskButtons.appendChild(editButton);
@@ -162,24 +198,32 @@ function renderTasks() {
 
         tasksContainer.appendChild(taskElement);
     });
+
+
+    // Update counter
+    updateTaskCounter();
 }
 
 
 // THEME SWITCH
 
 themeButton.addEventListener("click", () => {
-
+    switchSound.currentTime = 0;
+    switchSound.play();
     document.body.classList.toggle("glassTheme");
 
     if (document.body.classList.contains("glassTheme")) {
+
         themeButton.textContent = "◈ CYBER MODE";
+
     } else {
+
         themeButton.textContent = "◈ GLASS MODE";
     }
 });
 
 
-// LOAD SAVED TASKS
+// INITIAL LOAD
 
 loadTasks();
 renderTasks();
