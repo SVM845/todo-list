@@ -106,6 +106,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 20px;
+  overflow-y: auto;
 }
 .tasks {
   width: 90%;
@@ -128,4 +129,19 @@ body {
   background: none;
   border: none;
   font-size: 50px;
+}
+.doneButton {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  font-size: 50px;
+  color: rgb(9, 212, 100);
+}
+.taskButtons {
+  display: flex;
+  gap: 50px;
 }
