@@ -1,150 +1,528 @@
-/* Josh Comeau's CSS reset */
-/* 1. Use a more-intuitive box-sizing model */
+/* =========================================================
+   JOSH COMEAU CSS RESET
+   ========================================================= */
+
 *, *::before, *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-/* 2. Remove default margin */
 *:not(dialog) {
-  margin: 0;
+    margin: 0;
 }
 
-/* 3. Enable keyword animations */
 @media (prefers-reduced-motion: no-preference) {
-  html {
-    interpolate-size: allow-keywords;
-  }
+    html {
+        interpolate-size: allow-keywords;
+    }
 }
 
 body {
-  /* 4. Increase line-height */
-  line-height: 1.5;
-  /* 5. Improve text rendering */
-  -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* 6. Improve media defaults */
 img, picture, video, canvas, svg {
-  display: block;
-  max-width: 100%;
+    display: block;
+    max-width: 100%;
 }
 
-/* 7. Inherit fonts for form controls */
 input, button, textarea, select {
-  font: inherit;
+    font: inherit;
 }
 
-/* 8. Avoid text overflows */
 p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-/* 9. Improve line wrapping */
 p {
-  text-wrap: pretty;
+    text-wrap: pretty;
 }
+
 h1, h2, h3, h4, h5, h6 {
-  text-wrap: balance;
+    text-wrap: balance;
 }
 
-/*
-  10. Create a root stacking context
-*/
 #root, #__next {
-  isolation: isolate;
+    isolation: isolate;
 }
 
-/* Project Styles 👇 */
+
+/* =========================================================
+   CYBERPUNK TERMINAL
+   ========================================================= */
+
+:root {
+    --bg: #050709;
+    --terminal: #090d0f;
+    --panel: #0d1315;
+    --panel-hover: #111a1c;
+
+    --cyan: #00f6ff;
+    --cyan-dark: #008b91;
+
+    --pink: #ff176b;
+    --green: #00ff88;
+
+    --text: #d7f9fa;
+    --muted: #638083;
+
+    --border: #173438;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
 
 body {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 30px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #0d1a1d 0%,
+            #050709 55%,
+            #020304 100%
+        );
+
+    color: var(--text);
+
+    font-family: "Courier New", monospace;
 }
+
+
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
 .container {
+    width: min(1000px, 100%);
+    height: min(700px, 90vh);
+
     display: flex;
     flex-direction: column;
-    width: 1000px;
-    height: 600px;
-    background-color: rgb(197, 193, 193);
+
+    background: var(--terminal);
+
+    border: 1px solid var(--cyan-dark);
+
+    box-shadow:
+        0 0 15px rgba(0, 246, 255, 0.15),
+        0 0 60px rgba(0, 246, 255, 0.05);
+
+    position: relative;
+
+    overflow: hidden;
 }
+
+
+/* =========================================================
+   TERMINAL TOP BAR
+   ========================================================= */
+
+.container::before {
+    content: "●  ●  ●     TASK_MANAGER.exe     // SYSTEM ONLINE";
+
+    display: flex;
+    align-items: center;
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    background: #070b0c;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 .header {
     width: 100%;
-    padding: 20px;
+
+    padding: 35px 50px 25px;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 30px;
+
+    gap: 25px;
 }
+
+
+/* Main title */
+
 .header h1 {
-    font-size: 4rem;
-    font-weight: bold;
+    color: var(--cyan);
+
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+
+    letter-spacing: 6px;
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 5px var(--cyan),
+        0 0 15px rgba(0, 246, 255, 0.5);
 }
+
+
+/* Small subtitle */
+
+.header h1::before {
+    content: "// ";
+
+    color: var(--pink);
+}
+
+
+/* =========================================================
+   NEW TASK INPUT
+   ========================================================= */
+
 #newTask {
-    display: flex;
     width: 100%;
+
+    display: flex;
+
+    border: 1px solid var(--border);
+
+    background: #060a0b;
 }
+
+
+/* Input */
+
 #newTask input {
     width: 100%;
-    height: 50px;
-    background-color: aqua;
+    height: 55px;
+
+    padding: 0 18px;
+
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    color: var(--text);
+
+    font-family: "Courier New", monospace;
+    font-size: 1rem;
+
+    caret-color: var(--cyan);
+}
+
+
+#newTask input::placeholder {
+    color: var(--muted);
+}
+
+
+/* Focus */
+
+#newTask:focus-within {
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 10px rgba(0, 246, 255, 0.15);
+}
+
+
+/* Add button */
+
+#newTask button {
+    width: 200px;
+
+    border: none;
+    border-left: 1px solid var(--border);
+
+    background: #071113;
+
+    color: var(--cyan);
+
+    cursor: pointer;
+
+    font-size: 1.5rem;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#newTask button:hover {
+    background: var(--cyan);
+
+    color: #001113;
+
+    box-shadow:
+        0 0 20px rgba(0, 246, 255, 0.5);
+}
+
+
+/* =========================================================
+   TASK CONTAINER
+   ========================================================= */
+
+.tasksContainer {
+    width: 100%;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px 50px 35px;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.tasksContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tasksContainer::-webkit-scrollbar-track {
+    background: #050809;
+}
+
+.tasksContainer::-webkit-scrollbar-thumb {
+    background: var(--cyan-dark);
+}
+
+.tasksContainer::-webkit-scrollbar-thumb:hover {
+    background: var(--cyan);
+}
+
+
+/* =========================================================
+   TASK
+   ========================================================= */
+
+.task {
+    width: 100%;
+    min-height: 65px;
+
+    padding: 10px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.task:hover {
+    background: var(--panel-hover);
+
+    border-color: var(--cyan-dark);
+
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   TASK TEXT
+   ========================================================= */
+
+.taskText {
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 1.1rem;
+
+    word-break: break-word;
+}
+
+
+/* Add terminal symbol */
+
+.taskText::before {
+    content: "> ";
+
+    color: var(--cyan);
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.taskButtons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.taskButtons button {
+    width: 38px;
+    height: 38px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background: transparent;
+
+    border: 1px solid var(--border);
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+
+/* =========================================================
+   DONE BUTTON
+   ========================================================= */
+
+.doneButton {
+    color: var(--green);
+
+    font-size: 1.1rem;
+}
+
+
+.doneButton:hover {
+    background: var(--green);
+
+    color: #00130b;
+
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 15px rgba(0, 255, 136, 0.35);
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.deleteButton {
+    color: var(--pink);
+
     font-size: 1.5rem;
 }
-#newTask button {
-    width: 10%;
-    background-color: aqua;
+
+
+.deleteButton:hover {
+    background: var(--pink);
+
+    color: #18000a;
+
+    border-color: var(--pink);
+
+    box-shadow:
+        0 0 15px rgba(255, 23, 107, 0.4);
 }
-.tasksContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  overflow-y: auto;
-}
-.tasks {
-  width: 90%;
-  padding: 10px;
-  font-size: 2rem;
-  font-family: monospace;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  border: 5px solid rgb(4, 32, 31);
-}
-.deleteButton {
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  color: rgb(236, 2, 2);
-  background: none;
-  border: none;
-  font-size: 50px;
-}
-.doneButton {
-  height: 30px;
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  border: none;
-  font-size: 50px;
-  color: rgb(9, 212, 100);
-}
-.taskButtons {
-  display: flex;
-  gap: 50px;
-}
+
+
+/* =========================================================
+   COMPLETED TASK
+   ========================================================= */
+
 .completed {
-  text-decoration: line-through;
+    color: var(--muted);
+
+    text-decoration: line-through;
+}
+
+
+.completedTask {
+    opacity: 0.55;
+
+    border-color: #122326;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        height: 90vh;
+    }
+
+    .header {
+        padding: 25px 20px 20px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+
+        letter-spacing: 3px;
+    }
+
+    .tasksContainer {
+        padding: 10px 20px 25px;
+    }
+
+    .task {
+        padding: 10px;
+    }
+
+    .taskText {
+        font-size: 0.95rem;
+    }
+
+    .taskButtons button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .container::before {
+        font-size: 0.6rem;
+
+        padding: 0 10px;
+    }
 }
