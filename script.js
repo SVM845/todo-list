@@ -3,6 +3,29 @@ const input = document.querySelector('#newTask input');
 const tasksContainer = document.querySelector('.tasksContainer');
 const themeButton = document.querySelector('#themeButton');
 
+
+// TASK DATA
+
+let tasks = [];
+
+
+// LOCAL STORAGE
+
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+    const savedTasks = localStorage.getItem("tasks");
+
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+    }
+}
+
+
+// ADD TASK
+
 addTaskButton.addEventListener("click", addTask);
 
 input.addEventListener("keydown", (e) => {
@@ -12,72 +35,140 @@ input.addEventListener("keydown", (e) => {
 });
 
 function addTask() {
+
     if (input.value.trim() === "") {
         return;
     }
 
-    // Main task container
-    const task = document.createElement('div');
-    task.classList.add('task');
+    const task = {
+        id: Date.now(),
+        text: input.value.trim(),
+        completed: false
+    };
 
-    // Task text
-    const p = document.createElement('p');
-    p.textContent = input.value;
-    p.classList.add('taskText');
+    tasks.push(task);
 
-    // Buttons container
-    const taskButtons = document.createElement('div');
-    taskButtons.classList.add('taskButtons');
+    saveTasks();
+    renderTasks();
 
-    // Done button
-    const doneButton = document.createElement('button');
-    doneButton.classList.add('doneButton');
-    doneButton.textContent = "✔";
-
-    doneButton.addEventListener("click", () => {
-        p.classList.toggle('completed');
-        task.classList.toggle('completedTask');
-    });
-
-    // Delete button
-    const deleteButton = document.createElement('button');
-    deleteButton.classList.add('deleteButton');
-    deleteButton.textContent = "×";
-
-    deleteButton.addEventListener("click", () => {
-        task.remove();
-    });
-
-    // Edit button
-    const editButton = document.createElement('button');
-    editButton.classList.add('editButton');
-    editButton.textContent = "✎";
-
-    editButton.addEventListener("click", () => {
-        const newTask = prompt("Edit task:", p.textContent);
-
-        if (newTask !== null && newTask.trim() !== "") {
-            p.textContent = newTask.trim();
-        }
-    });
-
-    // Build the task
-    taskButtons.appendChild(doneButton);
-    taskButtons.appendChild(editButton);
-    taskButtons.appendChild(deleteButton);
-    
-    task.appendChild(p);
-    task.appendChild(taskButtons);
-
-    tasksContainer.appendChild(task);
-
-    // Clear input
     input.value = "";
     input.focus();
 }
 
-//Glass Theme
+
+// RENDER TASKS
+
+function renderTasks() {
+
+    // Clear current tasks
+    tasksContainer.innerHTML = "";
+
+    // Create every task from the tasks array
+    tasks.forEach(task => {
+
+        // Main task container
+        const taskElement = document.createElement('div');
+        taskElement.classList.add('task');
+
+        // Task text
+        const p = document.createElement('p');
+        p.textContent = task.text;
+        p.classList.add('taskText');
+
+        // Buttons container
+        const taskButtons = document.createElement('div');
+        taskButtons.classList.add('taskButtons');
+
+
+    
+        // DONE BUTTON
+    
+
+        const doneButton = document.createElement('button');
+
+        doneButton.classList.add('doneButton');
+        doneButton.textContent = "✔";
+
+        doneButton.addEventListener("click", () => {
+
+            task.completed = !task.completed;
+
+            saveTasks();
+            renderTasks();
+        });
+
+
+    
+        // EDIT BUTTON
+    
+
+        const editButton = document.createElement('button');
+
+        editButton.classList.add('editButton');
+        editButton.textContent = "✎";
+
+        editButton.addEventListener("click", () => {
+
+            const newTask = prompt("Edit task:", task.text);
+
+            if (newTask !== null && newTask.trim() !== "") {
+
+                task.text = newTask.trim();
+
+                saveTasks();
+                renderTasks();
+            }
+        });
+
+
+    
+        // DELETE BUTTON
+    
+
+        const deleteButton = document.createElement('button');
+
+        deleteButton.classList.add('deleteButton');
+        deleteButton.textContent = "×";
+
+        deleteButton.addEventListener("click", () => {
+
+            tasks = tasks.filter(t => t.id !== task.id);
+
+            saveTasks();
+            renderTasks();
+        });
+
+
+    
+        // COMPLETED STYLING
+    
+
+        if (task.completed) {
+            p.classList.add('completed');
+            taskElement.classList.add('completedTask');
+        }
+
+
+    
+        // BUILD TASK
+    
+
+        taskButtons.appendChild(doneButton);
+        taskButtons.appendChild(editButton);
+        taskButtons.appendChild(deleteButton);
+
+        taskElement.appendChild(p);
+        taskElement.appendChild(taskButtons);
+
+        tasksContainer.appendChild(taskElement);
+    });
+}
+
+
+// THEME SWITCH
+
 themeButton.addEventListener("click", () => {
+
     document.body.classList.toggle("glassTheme");
 
     if (document.body.classList.contains("glassTheme")) {
@@ -86,3 +177,9 @@ themeButton.addEventListener("click", () => {
         themeButton.textContent = "◈ GLASS MODE";
     }
 });
+
+
+// LOAD SAVED TASKS
+
+loadTasks();
+renderTasks();

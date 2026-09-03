@@ -525,7 +525,7 @@ body.glassTheme .container {
 /* GLASS TOP BAR */
 
 body.glassTheme .container::before {
-  content: "●  ●  ●     TASK_MANAGER     // SYSTEM ONLINE";
+  content: "";
 
   background: rgba(255, 255, 255, 0.04);
 
