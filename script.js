@@ -16,8 +16,6 @@ const switchSound = new Audio("./sounds/switch.mp3");
 const addSound = new Audio("./sounds/add.mp3");
 
 
-
-
 // LOCAL STORAGE
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
